@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechShop - Premium Checkout</title>
+    <link rel="stylesheet" href="styles.css?v=2.3">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-container">
+            <span class="logo">TechShop</span>
+            <nav class="nav-links">
+                <a href="#" id="nav-products">Products</a>
+                <a href="#" id="nav-categories">Categories</a>
+                <a href="#" id="nav-cart" class="active">Cart <span id="cart-count-badge" class="cart-badge">2</span></a>
+                <a href="#" id="nav-orders">Orders <span id="orders-count-badge" class="orders-badge" style="display:none;">0</span></a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Toast Notification -->
+    <div id="cart-toast" class="cart-toast" style="display: none;"></div>
+
+    <main class="checkout-container">
+        <!-- Cart View -->
+        <div class="checkout-layout tab-view" id="view-cart">
+            <!-- Left: Checkout Form -->
+            <section class="checkout-form-section">
+                <div class="section-header">
+                    <h2 class="section-title" id="form-title">Shipping Information</h2>
+                    <p class="section-desc" id="form-desc">Enter your delivery address and contact details below.</p>
+                </div>
+                
+                <form class="checkout-form" onsubmit="event.preventDefault();">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstname">First Name</label>
+                            <input type="text" id="firstname" value="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" id="lastname" value="Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Street Address</label>
+                        <input type="text" id="address" value="123 Innovation Drive" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" value="San Francisco" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postal">Postal Code</label>
+                            <input type="text" id="postal" value="94107" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" value="+1 (555) 019-2834" required>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right: Cart Summary -->
+            <section class="cart-summary-section">
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="section-title" id="summary-title">Order Summary</h2>
+                    <span id="order-summary-count" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; background: #f1f5f9; padding: 2px 8px; border-radius: 12px;">2 items</span>
+                </div>
+
+                <div class="cart-items" id="cart-items-list">
+                    <!-- Dynamically rendered via script.js -->
+                </div>
+
+                <!-- Quick Add to Order inside Order Summary -->
+                <div class="quick-add-box" style="margin-bottom: 1.5rem; padding: 0.85rem; background: #f8fafc; border-radius: 8px; border: 1px dashed var(--border);">
+                    <label for="quick-add-select" style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">➕ Add Item Directly to Order:</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <select id="quick-add-select" style="flex: 1; padding: 0.5rem 0.65rem; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.85rem; background: #fff; color: var(--text-main);">
+                            <option value="omnibuds">🎧 OmniBuds Pro Wireless ($149)</option>
+                            <option value="deskmat">⌨️ Glassmorphic Desk Mat ($35)</option>
+                            <option value="mouse">🖱️ Precision Glide Mouse ($89)</option>
+                            <option value="display">🖥️ UltraWide Display ($499)</option>
+                        </select>
+                        <button id="quick-add-btn" type="button" style="background: var(--primary); color: #ffffff; border: none; border-radius: 6px; padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.2s;">+ Add</button>
+                    </div>
+                </div>
+
+                <div class="summary-totals" id="totals-block">
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal">$184.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Shipping</span>
+                        <span class="shipping-free">Free</span>
+                    </div>
+                    <div class="total-row total-highlight">
+                        <span>Grand Total</span>
+                        <span id="cart-grandtotal">$184.00</span>
+                    </div>
+                </div>
+
+                <div class="checkout-action-wrapper" id="action-wrapper">
+                    <!-- The bug triggers will manipulate classes on this button -->
+                    <button id="checkout-btn" class="checkout-btn">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Products View -->
+        <div id="view-products" class="tab-view" style="display: none;">
+            <div class="section-header" style="margin-bottom: 2rem;">
+                <h2 class="section-title" style="font-size: 1.75rem;">Premium Gadgets</h2>
+                <p class="section-desc">Explore our curated workspace accessories and audio devices.</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <span class="product-badge">Best Seller</span>
+                    <div class="product-img">🎧</div>
+                    <div class="product-info">
+                        <h3>OmniBuds Pro Wireless</h3>
+                        <p>High-fidelity audio with active noise cancellation.</p>
+                        <div class="product-price-row">
+                            <span class="price">$149.00</span>
+                            <button class="add-to-cart-btn btn-add-to-cart" data-id="omnibuds" data-name="OmniBuds Pro Wireless" data-price="149" data-meta="Color: Space Grey" data-icon="🎧">+ Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <span class="product-badge">Popular</span>
+                    <div class="product-img">⌨️</div>
+                    <div class="product-info">
+                        <h3>Glassmorphic Desk Mat</h3>
+                        <p>Extra large workspace mat with fluid glass aesthetics.</p>
+                        <div class="product-price-row">
+                            <span class="price">$35.00</span>
+                            <button class="add-to-cart-btn btn-add-to-cart" data-id="deskmat" data-name="Glassmorphic Desk Mat" data-price="35" data-meta="Size: XL" data-icon="⌨️">+ Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <span class="product-badge">New</span>
+                    <div class="product-img">🖱️</div>
+                    <div class="product-info">
+                        <h3>Precision Glide Mouse</h3>
+                        <p>Ergonomic layout wireless mouse with hyper-scroll wheels.</p>
+                        <div class="product-price-row">
+                            <span class="price">$89.00</span>
+                            <button class="add-to-cart-btn btn-add-to-cart" data-id="mouse" data-name="Precision Glide Mouse" data-price="89" data-meta="Color: Matte Black" data-icon="🖱️">+ Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <span class="product-badge">Featured</span>
+                    <div class="product-img">🖥️</div>
+                    <div class="product-info">
+                        <h3>UltraWide Display</h3>
+                        <p>34-inch curved workspace screen for multitasking.</p>
+                        <div class="product-price-row">
+                            <span class="price">$499.00</span>
+                            <button class="add-to-cart-btn btn-add-to-cart" data-id="display" data-name="UltraWide Display" data-price="499" data-meta="Resolution: 4K Curved" data-icon="🖥️">+ Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories View -->
+        <div id="view-categories" class="tab-view" style="display: none;">
+            <div class="section-header" style="margin-bottom: 2rem;">
+                <h2 class="section-title" style="font-size: 1.75rem;">Categories</h2>
+                <p class="section-desc">Filter workspace essentials by department.</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" data-category="audio" style="cursor: pointer;">
+                    <div class="category-icon">🎧</div>
+                    <h3>Audio Gear</h3>
+                    <p>Studio monitors, buds and noise cancellers</p>
+                    <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-top: 0.5rem; display: inline-block;">Browse Items &rarr;</span>
+                </div>
+                <div class="category-card" data-category="displays" style="cursor: pointer;">
+                    <div class="category-icon">🖥️</div>
+                    <h3>Displays</h3>
+                    <p>Fluid panels, mounts and workspaces</p>
+                    <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-top: 0.5rem; display: inline-block;">Browse Items &rarr;</span>
+                </div>
+                <div class="category-card" data-category="peripherals" style="cursor: pointer;">
+                    <div class="category-icon">⌨️</div>
+                    <h3>Peripherals</h3>
+                    <p>Ergonomic inputs, mats and stands</p>
+                    <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-top: 0.5rem; display: inline-block;">Browse Items &rarr;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders View -->
+        <div id="view-orders" class="tab-view" style="display: none;">
+            <div class="section-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 class="section-title" style="font-size: 1.75rem;">Your Order History</h2>
+                    <p class="section-desc">Track and review all purchases placed in this session.</p>
+                </div>
+                <button id="clear-orders-btn" type="button" style="background: none; border: 1px solid var(--border); padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.8rem; color: var(--text-muted); cursor: pointer; transition: all 0.2s;">Clear Order History</button>
+            </div>
+            <div id="orders-list-container" class="orders-list">
+                <!-- Dynamically rendered via script.js -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 TechShop Inc. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js?v=2.3"></script>
+</body>
+</html>

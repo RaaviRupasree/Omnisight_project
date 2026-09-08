@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+.env
+
+# Node/Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Playwright
+.playwright/
+downloads/
+screenshots/
+results/
+
+# OS/IDE
+.VSCode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
