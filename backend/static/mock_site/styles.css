@@ -816,3 +816,11 @@ body {
 .summary-totals.bug-contrast .shipping-free {
     color: #16a34a !important;
 }
+
+
+/* --- OmniSight Self-Healing Patch (PR #21) --- */
+.checkout-btn.bug-clipping {
+    position: static !important;
+    width: 100% !important;
+    margin-top: 1.5rem !important;
+}
