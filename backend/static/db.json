@@ -1,6 +1,96 @@
 {
   "scan_history": [
     {
+      "id": "run_6257",
+      "bug_type": "clipping",
+      "viewport": "desktop",
+      "status": "HEALED",
+      "logs": [
+        "[Orchestrator] Starting OmniSight scan on: http://localhost:8000/static/mock_site/index.html?bug=clipping",
+        "[Orchestrator] Configuration - Viewport: desktop, Run ID: run_6257",
+        "[Navigator] Launching headless browser to capture layout state...",
+        "[Navigator] Screenshot captured: /static/runs/run_6257_before.png",
+        "[Navigator] Extracted 61 DOM node layout boundaries.",
+        "[VLM Engine] Submitting visual and spatial data to Gemini Model...",
+        "[VLM Engine] Visual Anomaly Detected: The checkout button is clipping outside the viewport boundary on the right.",
+        "[VLM Engine] Analysis reasoning: The page is viewed on a mobile layout (viewport width: 390px). The button with class `checkout-btn bug-clipping` has absolute positioning: `position: absolute; right: -120px;`. This pushes it 120px beyond the right boundary of the page container. Because the action wrapper does not clip its children, the button is rendered partially off-screen, preventing mobile users from completing their purchase. We should make the button fit the full width of the container by changing it to relative or static layout and adjusting width to 100%.",
+        "[Agentic Orchestrator] Entering healing loop. Attempting layout repair...",
+        "[Agentic Orchestrator] Applying CSS patch (Attempt 1: Suboptimal margin tweak)...",
+        "[Navigator] Captured validation screenshot for Attempt 1.",
+        "[VLM Engine] Evaluating Attempt 1 patch...",
+        "[VLM Engine] Audit (Attempt 1): FAIL. The checkout button remains partially clipped outside the 390px viewport width.",
+        "[Agentic Orchestrator] First CSS fix failed visual verification. Retrying code generation...",
+        "[Agentic Orchestrator] Applying CSS patch (Attempt 2: Flexbox/Block reset)...",
+        "[Navigator] Captured validation screenshot for Attempt 2: /static/runs/run_6257_after.png.",
+        "[VLM Engine] Evaluating Attempt 2 patch...",
+        "[VLM Engine] Audit (Attempt 2): PASS. Visual validation passes. The layout bug is verified as fixed by the simulator.",
+        "[CI/CD Gateway] Visual proof confirmed. Creating branch and staging stylesheet modifications...",
+        "[CI/CD Gateway] Pull Request #21 created successfully on branch: omnisight/fix-clipping-pr-21."
+      ],
+      "before_screenshot": "/static/runs/run_6257_before.png",
+      "after_screenshot": "/static/runs/run_6257_after.png",
+      "description": "The checkout button is clipping outside the viewport boundary on the right.",
+      "reasoning": "The page is viewed on a mobile layout (viewport width: 390px). The button with class `checkout-btn bug-clipping` has absolute positioning: `position: absolute; right: -120px;`. This pushes it 120px beyond the right boundary of the page container. Because the action wrapper does not clip its children, the button is rendered partially off-screen, preventing mobile users from completing their purchase. We should make the button fit the full width of the container by changing it to relative or static layout and adjusting width to 100%.",
+      "css_fix": ".checkout-btn.bug-clipping {\n    position: static !important;\n    width: 100% !important;\n    margin-top: 1.5rem !important;\n}",
+      "pr": {
+        "id": 21,
+        "branch": "omnisight/fix-clipping-pr-21",
+        "commit_hash": "685ed1e9",
+        "diff": "diff --git a/backend/static/mock_site/styles.css b/backend/static/mock_site/styles.css\nindex 9ecbb18..25eadeb 100644\n--- a/backend/static/mock_site/styles.css\n+++ b/backend/static/mock_site/styles.css\n@@ -816,3 +816,11 @@ body {\n .summary-totals.bug-contrast .shipping-free {\n     color: #16a34a !important;\n }\n+\n+\n+/* --- OmniSight Self-Healing Patch (PR #21) --- */\n+.checkout-btn.bug-clipping {\n+    position: static !important;\n+    width: 100% !important;\n+    margin-top: 1.5rem !important;\n+}",
+        "status": "MERGED",
+        "title": "Fix visual clipping bug on checkout page",
+        "body": "OmniSight VLM identified a visual layout issue (clipping) and generated a CSS patch to resolve alignment. Visual audit passed successfully.",
+        "before_screenshot": "/static/runs/run_6257_before.png",
+        "after_screenshot": "/static/runs/run_6257_after.png",
+        "bug_type": "clipping"
+      }
+    },
+    {
+      "id": "run_2855",
+      "bug_type": "clipping",
+      "viewport": "mobile",
+      "status": "HEALED",
+      "logs": [
+        "[Orchestrator] Starting OmniSight scan on: http://localhost:8000/static/mock_site/index.html?bug=clipping",
+        "[Orchestrator] Configuration - Viewport: mobile, Run ID: run_2855",
+        "[Navigator] Launching headless browser to capture layout state...",
+        "[Navigator] Screenshot captured: /static/runs/run_2855_before.png",
+        "[Navigator] Extracted 61 DOM node layout boundaries.",
+        "[VLM Engine] Submitting visual and spatial data to Gemini Model...",
+        "[VLM Engine] Visual Anomaly Detected: The checkout button is clipping outside the viewport boundary on the right.",
+        "[VLM Engine] Analysis reasoning: The page is viewed on a mobile layout (viewport width: 390px). The button with class `checkout-btn bug-clipping` has absolute positioning: `position: absolute; right: -120px;`. This pushes it 120px beyond the right boundary of the page container. Because the action wrapper does not clip its children, the button is rendered partially off-screen, preventing mobile users from completing their purchase. We should make the button fit the full width of the container by changing it to relative or static layout and adjusting width to 100%.",
+        "[Agentic Orchestrator] Entering healing loop. Attempting layout repair...",
+        "[Agentic Orchestrator] Applying CSS patch (Attempt 1: Suboptimal margin tweak)...",
+        "[Navigator] Captured validation screenshot for Attempt 1.",
+        "[VLM Engine] Evaluating Attempt 1 patch...",
+        "[VLM Engine] Audit (Attempt 1): FAIL. The checkout button remains partially clipped outside the 390px viewport width.",
+        "[Agentic Orchestrator] First CSS fix failed visual verification. Retrying code generation...",
+        "[Agentic Orchestrator] Applying CSS patch (Attempt 2: Flexbox/Block reset)...",
+        "[Navigator] Captured validation screenshot for Attempt 2: /static/runs/run_2855_after.png.",
+        "[VLM Engine] Evaluating Attempt 2 patch...",
+        "[VLM Engine] Audit (Attempt 2): PASS. Visual validation passes. The layout bug is verified as fixed by the simulator.",
+        "[CI/CD Gateway] Visual proof confirmed. Creating branch and staging stylesheet modifications...",
+        "[CI/CD Gateway] Pull Request #20 created successfully on branch: omnisight/fix-clipping-pr-20."
+      ],
+      "before_screenshot": "/static/runs/run_2855_before.png",
+      "after_screenshot": "/static/runs/run_2855_after.png",
+      "description": "The checkout button is clipping outside the viewport boundary on the right.",
+      "reasoning": "The page is viewed on a mobile layout (viewport width: 390px). The button with class `checkout-btn bug-clipping` has absolute positioning: `position: absolute; right: -120px;`. This pushes it 120px beyond the right boundary of the page container. Because the action wrapper does not clip its children, the button is rendered partially off-screen, preventing mobile users from completing their purchase. We should make the button fit the full width of the container by changing it to relative or static layout and adjusting width to 100%.",
+      "css_fix": ".checkout-btn.bug-clipping {\n    position: static !important;\n    width: 100% !important;\n    margin-top: 1.5rem !important;\n}",
+      "pr": {
+        "id": 20,
+        "branch": "omnisight/fix-clipping-pr-20",
+        "commit_hash": "f684d46d",
+        "diff": "diff --git a/backend/static/mock_site/styles.css b/backend/static/mock_site/styles.css\nindex 9ecbb18..b9cb890 100644\n--- a/backend/static/mock_site/styles.css\n+++ b/backend/static/mock_site/styles.css\n@@ -816,3 +816,11 @@ body {\n .summary-totals.bug-contrast .shipping-free {\n     color: #16a34a !important;\n }\n+\n+\n+/* --- OmniSight Self-Healing Patch (PR #20) --- */\n+.checkout-btn.bug-clipping {\n+    position: static !important;\n+    width: 100% !important;\n+    margin-top: 1.5rem !important;\n+}",
+        "status": "OPEN",
+        "title": "Fix visual clipping bug on checkout page",
+        "body": "OmniSight VLM identified a visual layout issue (clipping) and generated a CSS patch to resolve alignment. Visual audit passed successfully.",
+        "before_screenshot": "/static/runs/run_2855_before.png",
+        "after_screenshot": "/static/runs/run_2855_after.png",
+        "bug_type": "clipping"
+      }
+    },
+    {
       "id": "run_3158",
       "bug_type": "clipping",
       "viewport": "mobile",
@@ -951,7 +1041,31 @@
       "before_screenshot": "/static/runs/run_3158_before.png",
       "after_screenshot": "/static/runs/run_3158_after.png",
       "bug_type": "clipping"
+    },
+    "20": {
+      "id": 20,
+      "branch": "omnisight/fix-clipping-pr-20",
+      "commit_hash": "f684d46d",
+      "diff": "diff --git a/backend/static/mock_site/styles.css b/backend/static/mock_site/styles.css\nindex 9ecbb18..b9cb890 100644\n--- a/backend/static/mock_site/styles.css\n+++ b/backend/static/mock_site/styles.css\n@@ -816,3 +816,11 @@ body {\n .summary-totals.bug-contrast .shipping-free {\n     color: #16a34a !important;\n }\n+\n+\n+/* --- OmniSight Self-Healing Patch (PR #20) --- */\n+.checkout-btn.bug-clipping {\n+    position: static !important;\n+    width: 100% !important;\n+    margin-top: 1.5rem !important;\n+}",
+      "status": "OPEN",
+      "title": "Fix visual clipping bug on checkout page",
+      "body": "OmniSight VLM identified a visual layout issue (clipping) and generated a CSS patch to resolve alignment. Visual audit passed successfully.",
+      "before_screenshot": "/static/runs/run_2855_before.png",
+      "after_screenshot": "/static/runs/run_2855_after.png",
+      "bug_type": "clipping"
+    },
+    "21": {
+      "id": 21,
+      "branch": "omnisight/fix-clipping-pr-21",
+      "commit_hash": "685ed1e9",
+      "diff": "diff --git a/backend/static/mock_site/styles.css b/backend/static/mock_site/styles.css\nindex 9ecbb18..25eadeb 100644\n--- a/backend/static/mock_site/styles.css\n+++ b/backend/static/mock_site/styles.css\n@@ -816,3 +816,11 @@ body {\n .summary-totals.bug-contrast .shipping-free {\n     color: #16a34a !important;\n }\n+\n+\n+/* --- OmniSight Self-Healing Patch (PR #21) --- */\n+.checkout-btn.bug-clipping {\n+    position: static !important;\n+    width: 100% !important;\n+    margin-top: 1.5rem !important;\n+}",
+      "status": "MERGED",
+      "title": "Fix visual clipping bug on checkout page",
+      "body": "OmniSight VLM identified a visual layout issue (clipping) and generated a CSS patch to resolve alignment. Visual audit passed successfully.",
+      "before_screenshot": "/static/runs/run_6257_before.png",
+      "after_screenshot": "/static/runs/run_6257_after.png",
+      "bug_type": "clipping"
     }
   },
-  "pr_counter": 20
+  "pr_counter": 22
 }

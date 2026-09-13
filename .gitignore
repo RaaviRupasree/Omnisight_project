@@ -1,27 +1,40 @@
-# Python
+# ---- Secrets & environment variables ----
+.env
+.env.*
+*.env
+backend/.env
+dashboard/.env
+**/secrets.json
+**/*apikey*
+**/*api_key*
+
+# ---- Python ----
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+venv/
 .venv/
 env/
-.env
+*.egg-info/
+.pytest_cache/
 
-# Node/Vite
+# ---- Node / React (dashboard) ----
 node_modules/
-dist/
-dist-ssr/
-*.local
+dashboard/node_modules/
+dashboard/dist/
+dashboard/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Playwright
-.playwright/
-downloads/
-screenshots/
-results/
+# ---- Generated run outputs (screenshots from OmniSight runs) ----
+backend/static/runs/*.png
+backend/static/runs/*.jpg
 
-# OS/IDE
-.VSCode/
-.idea/
-Thumbs.db
-Desktop.ini
+# ---- OS junk files ----
 .DS_Store
+Thumbs.db
+
+# ---- VS Code settings (optional, personal preference) ----
+.vscode/
